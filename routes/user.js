@@ -1,23 +1,25 @@
 const express = require("express");
 const router = express.Router();
 
-const userValidation = require("../validations/user.validation");
+const userValidation = require("../middleware/user_validation");
 const registerController = require("../controllers/register");
-const passwordController = require("../controllers/password");
+const passwordController = require("../controllers/reset_password");
+const multer = require("../middleware/multer_config");
 
 router.post(
   "/signup",
+  multer,
   userValidation.signupValidation(),
   registerController.signup
 );
 router.get("/confirm/:confirmationCode", registerController.verifyUser);
 router.post(
-  "/recover",
+  "/forgot-password",
   userValidation.forgotPasswordValidation(),
   passwordController.forgotPassword
 );
 router.post(
-  "/auth/reset/:token",
+  "/reset-password/:token",
   userValidation.resetPasswordValidation(),
   passwordController.resetPassword
 );

@@ -29,7 +29,7 @@ exports.forgotPassword = (req, res, next) => {
             const url =
               "http://" +
               req.headers.host +
-              "/api/auth/reset/" +
+              "/api/reset-password/" +
               user.resetPasswordToken;
             const subject = "Forgot password";
             const body = `Hi ${user.username} \n 

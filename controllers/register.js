@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("../config/nodemailer");
+const fs = require("fs");
 
 exports.signup = (req, res, next) => {
   try {
@@ -19,11 +20,13 @@ exports.signup = (req, res, next) => {
       .hash(req.body.password, 10)
       .then((hash) => {
         const user = new User({
-          fullName: req.body.fullName,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
           username: req.body.username,
           email: req.body.email,
           password: hash,
           confirmationCode: token,
+          image: req.file ? req.file.filename : `no-image.jpeg`,
         });
         user
           .save()

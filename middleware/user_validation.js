@@ -4,6 +4,16 @@ const User = require("../models/User");
 module.exports = {
   signupValidation: () => {
     return [
+      body("firstName")
+        .exists({ checkFalsy: true })
+        .withMessage("The first name field is required")
+        .isAlpha()
+        .withMessage("The first name should be valid"),
+      body("lastName")
+        .exists({ checkFalsy: true })
+        .withMessage("The last name field is required")
+        .isAlpha()
+        .withMessage("The last name should be valid"),
       body("username")
         .exists({ checkFalsy: true })
         .withMessage("Username field is required")
@@ -36,11 +46,6 @@ module.exports = {
           }
         });
       }),
-      body("fullName")
-        .exists({ checkFalsy: true })
-        .withMessage("The full name field is required")
-        .matches(/^[a-z]([-']?[a-z]+)*( [a-z]([-']?[a-z]+)*)+$/)
-        .withMessage("The full name should be valid"),
     ];
   },
   forgotPasswordValidation: () => {
